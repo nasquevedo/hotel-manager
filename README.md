@@ -1,6 +1,8 @@
 # Hotel Manager
 
-Aplicación para la gestion de hoteles y cuartos diseñada en ReactJS
+Esta es una aplicación diseñada en ReactJs para la gestion de hoteles y habitaciones por medio de un Rest Api que expone las rutas necesarias para dicha tarea.
+
+A continuación se encuentra una pequeña documentación para el despliegue de la app localmente.
 
 **Nota: Se sugiere instalar el REST API antes para poder ver el funcionamiento de la aplicación correctamente**
 
