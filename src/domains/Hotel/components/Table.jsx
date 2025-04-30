@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { addFormData } from "../slice/formDataSlice"
+import { getHotels, getHotel, deleteHotel } from '../services/hotel'
 
 const Table = () => {
     const [ hotels, setHotels ] = useState({})
@@ -8,35 +9,19 @@ const Table = () => {
 
     useEffect(() => {
         (async () => {
-            const response = await fetch('http://localhost:8000/api/v1/hotels')
-
-            if (response.ok) {
-                const result = await response.json()
-                setHotels(result.hotels)
-            }
+            const hotels = await getHotels({ method: 'GET'});
+            setHotels(hotels)
         })()
+       
     }, [])
 
-    const handleEdit = async (id) => {
-        const response = await fetch(`http://localhost:8000/api/v1/hotels/${id}`)
-
-        if (response.ok) {
-            const result = await response.json()
-
-            dispatch(addFormData(result.hotel))
-        }
+    const handleEdit = async (id) => { 
+       const hotel = await getHotel(id, { method: 'GET'})
+       dispatch(addFormData(hotel)) 
     }
 
     const handleDelete = async (id) => {
-        const response = await fetch(`http://localhost:8000/api/v1/hotels/delete/${id}`, {
-            method: "DELETE"
-        })
-
-        if (response.ok) {
-            const result = await response.json()
-
-            console.log(result)
-        }
+        deleteHotel(id, { method: 'DELETE'})
     }
 
     return (

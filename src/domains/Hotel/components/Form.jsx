@@ -4,6 +4,8 @@ import { addFormDataByValue, addFormData, addErrors, clearErrors } from "../slic
 import ErrorField from "../../../shared/components/ErrorField"
 import { validator } from "../services/validator"
 import Success from "../../../shared/components/Success"
+import { createHotel } from "../services/hotel"
+import { getCities } from "../services/city"
 
 const initialState = {
     id: "",
@@ -26,12 +28,8 @@ const Form = () => {
 
     useEffect(() => {
         (async() => {
-            const response = await fetch('http://localhost:8000/api/v1/cities')
-            if (response.ok) {
-                const result = await response.json()
-
-                setCities(result.cities)
-            }
+            const cities = await getCities({ method: 'GET' })
+            setCities(cities)
         })()
     }, [])
 
@@ -55,21 +53,17 @@ const Form = () => {
 
         const url = formData.id !== '' ? `http://localhost:8000/api/v1/hotels/update/${formData.id}`: 'http://localhost:8000/api/v1/hotels/create'
         const method = formData.id !== '' ? 'PUT' :  'POST'
-
-        const response = await fetch(url, {
+        const options = {
             headers: {
                 'Content-Type': 'application/json'
             },
             method,
             body: JSON.stringify(formData)
-        })
+        }
 
-        if (response.ok) {
-            const result = await response.json()
-
-            if (result.message === 'success') {
-                setSucceed(true)
-            }
+        const created = await createHotel(url, options)
+        if (created === 'success') {
+            setSucceed(true)
         }
     }
 
