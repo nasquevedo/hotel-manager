@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import { addRoomDataByValue, addRoomDataAccomodation } from '../slice/roomDataSlice'
 import Success from '../../../shared/components/Success'
 import Warning from '../../../shared/components/Warning'
-import Error from '../../../shared/components/Error'
 
 const Form = () => {
     const [ hotels, setHotels ] = useState({})
