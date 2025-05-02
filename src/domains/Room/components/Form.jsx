@@ -18,22 +18,14 @@ const Form = () => {
     const roomData = useSelector((state) => state.roomData.data)
     const dispatch = useDispatch()
 
+    const {
+        REACT_APP_HOTEL_ROOM_CREATE_ENDPOINT,
+        REACT_APP_HOTEL_ROOM_UPDATE_ENDPOINT
+    } = process.env
+
     const title = roomData.id !== '' ? 'Editar' : 'Crear'
 
     useEffect(() => {
-        /**const getHotels = async() => {
-            try {
-                const response = await fetch('http://localhost:8000/api/v1/hotels')
-
-                if (response.ok) {
-                    const result = await response.json()
-
-                    setHotels(result.hotels)
-                }
-            } catch(e) {
-                console.log(e)
-            }
-        }*/
         (async () => {
             const hotels = await getHotels({ method: 'GET'})
             setHotels(hotels)
@@ -41,44 +33,11 @@ const Form = () => {
             const rooms = await getRooms({ method: 'GET'})
             setRooms(rooms)
         })()
-        
-        /*const getRooms = async() => {
-            try {
-                const response = await fetch('http://localhost:8000/api/v1/rooms')
-
-                if (response.ok) {
-                    const result = await response.json()
-
-                    setRooms(result.rooms)
-                }
-            } catch(e) {
-                console.log(e)
-            }
-        }*/
-
-        //getHotels()
-        //getRooms()
     }, [])
 
     const { room_id } = roomData.room_accomodation;
 
     useEffect(() => {
-        //const getAccomodations = async (room_id) => {
-            /*try {
-                const response = await fetch(`http://localhost:8000/api/v1/accomodations/${room_id}`)
-
-                if (response.ok) {
-                    const result = await response.json()
-        
-                    setAccomodations(result.accomodations)
-                }
-            } catch(e) {
-                console.log(e)
-            }*/
-            // return 
-           
-        //}
-
         if (room_id !== '') {
             (async (room_id) => {
                 const accomodations = await getAccomodations(room_id)
@@ -100,36 +59,10 @@ const Form = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault()
-
-        const url = roomData.id !== '' ? `http://localhost:8000/api/v1/hotel/rooms/update/${roomData.id}` : 'http://localhost:8000/api/v1/hotel/rooms/create'
+        
+        const url = roomData.id !== '' ? `${REACT_APP_HOTEL_ROOM_UPDATE_ENDPOINT}${roomData.id}` : REACT_APP_HOTEL_ROOM_CREATE_ENDPOINT
         const method = roomData.id !== '' ? 'PUT': 'POST'
 
-        /*try {
-            const response = await fetch(url, {
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                method,
-                body: JSON.stringify({
-                    hotel_id: roomData.hotel_id,
-                    room_accomodation_id: roomData.room_accomodation_id,
-                    number_rooms: roomData.number_rooms
-                })
-            })
-
-            if (response.ok) {
-                const result = await response.json()
-
-                if (result.message === 'success') {
-                    setSucceed(true)
-                } else {
-                    setWatrning(true)
-                    setWarningMessage(result.message)
-                }
-            }
-        }catch (e) {
-            console.log(e)
-        }*/
        const options = {
             headers: {
                 'Content-Type': 'application/json'

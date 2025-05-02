@@ -24,6 +24,12 @@ const Form = () => {
     const errors = useSelector((state) => state.formData.errors)
     const dispatch = useDispatch()
 
+    const {
+        REACT_APP_API_URL,
+        REACT_APP_HOTEL_CREATE_ENDPOINT,
+        REACT_APP_HOTEL_UPDATE_ENDPOINT
+    } = process.env
+console.log(REACT_APP_API_URL)
     const title = formData.id !== '' ? 'Editar' : 'Crear'
 
     useEffect(() => {
@@ -51,7 +57,7 @@ const Form = () => {
             return
         }
 
-        const url = formData.id !== '' ? `http://localhost:8000/api/v1/hotels/update/${formData.id}`: 'http://localhost:8000/api/v1/hotels/create'
+        const url = formData.id !== '' ? `${REACT_APP_HOTEL_UPDATE_ENDPOINT}${formData.id}`: REACT_APP_HOTEL_CREATE_ENDPOINT
         const method = formData.id !== '' ? 'PUT' :  'POST'
         const options = {
             headers: {
