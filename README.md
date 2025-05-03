@@ -7,8 +7,8 @@ A continuación se encuentra una pequeña documentación para el despliegue de l
 **Nota: Se sugiere instalar el REST API antes para poder ver el funcionamiento de la aplicación correctamente**
 
 ## requeremientro
-- NodeJs
-- npm
+- node22.14
+- npm11.3
 
 
 ## Setting up
