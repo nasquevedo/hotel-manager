@@ -29,7 +29,7 @@ const Form = () => {
         REACT_APP_HOTEL_CREATE_ENDPOINT,
         REACT_APP_HOTEL_UPDATE_ENDPOINT
     } = process.env
-console.log(REACT_APP_API_URL)
+
     const title = formData.id !== '' ? 'Editar' : 'Crear'
 
     useEffect(() => {
